@@ -24,8 +24,7 @@ services:
     working_dir: /workspace
     stdin_open: true
     tty: true
-    networks:
-      - host
+    network_mode: bridge
 
 volumes:
   npm_cache:

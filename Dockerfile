@@ -1,5 +1,5 @@
-# 使用 Ubuntu 轻量版作为基础镜像
-FROM ubuntu:22.04
+# 使用 Ubuntu 18.04 作为基础镜像
+FROM ubuntu:18.04
 
 # 安装必要的基础工具和Claude Code
 RUN apt-get update && \
