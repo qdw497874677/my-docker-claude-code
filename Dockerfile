@@ -1,9 +1,9 @@
-# 使用 CentOS 7 作为基础镜像
-FROM centos:7
+# 使用 Ubuntu 轻量版作为基础镜像
+FROM ubuntu:22.04
 
 # 安装必要的基础工具和Claude Code
-RUN yum update -y && \
-    yum install -y \
+RUN apt-get update && \
+    apt-get install -y \
     bash \
     curl \
     git \
@@ -14,7 +14,8 @@ RUN yum update -y && \
     golang \
     rsync \
     ca-certificates \
-    && yum clean all \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
     && npm config set cache /tmp/.npm
 
 RUN echo "iptables -I OUTPUT -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu" >> /etc/rc.local
