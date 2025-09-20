@@ -29,6 +29,9 @@ RUN echo "iptables -I OUTPUT -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-ms
 # 安装Claude Code CLI
 RUN npm install -g @anthropic-ai/claude-code
 
+# 安装happy-coder
+RUN npm install -g happy-coder
+
 # 创建工作目录
 WORKDIR /workspace
 
