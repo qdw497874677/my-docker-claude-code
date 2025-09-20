@@ -1,6 +1,9 @@
 # 使用 Ubuntu 20.04 作为基础镜像
 FROM ubuntu:20.04
 
+# 设置非交互模式
+ENV DEBIAN_FRONTEND=noninteractive
+
 # 安装必要的基础工具和Claude Code
 RUN apt-get update && \
     apt-get install -y \
@@ -14,6 +17,7 @@ RUN apt-get update && \
     golang \
     rsync \
     ca-certificates \
+    tzdata \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && npm config set cache /tmp/.npm
