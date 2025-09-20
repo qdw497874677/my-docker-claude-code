@@ -1,40 +1,43 @@
-# 使用 alpine 基础镜像，手动安装 Node.js
-FROM alpine:latest
+# 使用 Alpine Linux 作为基础镜像，轻量且安全
+FROM alpine:3.19
 
-# 安装必要的系统依赖和 Node.js
+# 安装必要的基础工具和Claude Code
 RUN apk add --no-cache \
-    git \
-    curl \
     bash \
-    python3 \
-    py3-pip \
-    docker \
+    curl \
+    git \
     nodejs \
     npm \
-    && rm -rf /var/cache/apk/*
+    python3 \
+    py3-pip \
+    go \
+    rsync \
+    ca-certificates \
+    && rm -rf /var/cache/apk/* \
+    && npm config set cache /tmp/.npm
 
-# 设置工作目录
+# 创建工作目录
 WORKDIR /workspace
 
-# 全局安装 Claude Code CLI
-RUN npm install -g @anthropic-ai/claude-code
-
-# 创建非 root 用户
+# 创建非root用户
 RUN addgroup -g 1000 -S developer && \
     adduser -u 1000 -S developer -G developer
 
-# 切换到 developer 用户
+# 设置环境变量
+ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV HOME=/home/developer
+
+# 复制Claude Code配置（如果有）
+COPY --chown=developer:developer CLAUDE.local.md /home/developer/.claude/CLAUDE.md
+
+# 切换到非root用户
 USER developer
 
-# 设置环境变量
-ENV PATH=/home/developer/.npm-global/bin:$PATH
-ENV CLAUDE_CODE_CONFIG_DIR=/home/developer/.claude
-ENV EDITOR=vim
+# 设置默认工作目录
+WORKDIR /workspace
 
-# 创建必要目录
-RUN mkdir -p /home/developer/.claude && \
-    mkdir -p /workspace
+# 暴露常用端口（如果需要）
+EXPOSE 3000 8000 8080
 
-# 设置入口点
-ENTRYPOINT ["claude"]
-CMD ["--help"]
+# 默认启动bash
+CMD ["/bin/bash"]

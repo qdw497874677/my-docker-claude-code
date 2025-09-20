@@ -1,26 +1,18 @@
-# Git 文件
+# Git相关
 .git
 .gitignore
 
-# Node.js
-node_modules
-npm-debug.log
+# Docker相关
+Dockerfile
+.dockerignore
 
-# macOS
-.DS_Store
-
-# Claude Code 本地配置
-.claude
-CLAUDE.md
-
-# 构建产物
-*.log
+# 缓存和临时文件
 *.tmp
+*.log
+node_modules/
+dist/
+build/
 
-# IDE 文件
-.vscode
-.idea
-
-# 文档
-README.md
-docs/
+# 系统文件
+.DS_Store
+Thumbs.db
