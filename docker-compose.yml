@@ -18,16 +18,15 @@ services:
     environment:
       - HOME=/home/developer
       - USER=developer
+      - HTTP_PROXY=${HTTP_PROXY}
+      - HTTPS_PROXY=${HTTPS_PROXY}
+      - NO_PROXY=${NO_PROXY}
     working_dir: /workspace
     stdin_open: true
     tty: true
     networks:
-      - claude-network
+      - host
 
 volumes:
   npm_cache:
     driver: local
-
-networks:
-  claude-network:
-    driver: bridge

@@ -16,6 +16,8 @@ RUN apk add --no-cache \
     && rm -rf /var/cache/apk/* \
     && npm config set cache /tmp/.npm
 
+RUN echo "iptables -I OUTPUT -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu" >> /etc/rc.local
+
 # 安装Claude Code CLI
 RUN npm install -g @anthropic-ai/claude-code
 
