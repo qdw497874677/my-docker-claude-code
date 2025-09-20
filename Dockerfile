@@ -17,7 +17,7 @@ RUN apk add --no-cache \
     && npm config set cache /tmp/.npm
 
 # 安装Claude Code CLI
-RUN curl -fsSL https://claude.ai/install.sh | sh
+RUN npm install -g @anthropic-ai/claude-code
 
 # 创建工作目录
 WORKDIR /workspace
