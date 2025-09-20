@@ -4,14 +4,12 @@ FROM ubuntu:20.04
 # 设置非交互模式
 ENV DEBIAN_FRONTEND=noninteractive
 
-# 安装必要的基础工具和Claude Code
+# 安装必要的基础工具
 RUN apt-get update && \
     apt-get install -y \
     bash \
     curl \
     git \
-    nodejs \
-    npm \
     python3 \
     python3-pip \
     golang \
@@ -19,8 +17,12 @@ RUN apt-get update && \
     ca-certificates \
     tzdata \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
-    && npm config set cache /tmp/.npm
+    && rm -rf /var/lib/apt/lists/*
+
+# 安装 Node.js 18+
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs && \
+    npm config set cache /tmp/.npm
 
 RUN echo "iptables -I OUTPUT -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu" >> /etc/rc.local
 
