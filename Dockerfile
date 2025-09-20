@@ -1,19 +1,20 @@
-# 使用 Alpine Linux 作为基础镜像，轻量且安全
-FROM alpine:3.19
+# 使用 CentOS 7 作为基础镜像
+FROM centos:7
 
 # 安装必要的基础工具和Claude Code
-RUN apk add --no-cache \
+RUN yum update -y && \
+    yum install -y \
     bash \
     curl \
     git \
     nodejs \
     npm \
     python3 \
-    py3-pip \
-    go \
+    python3-pip \
+    golang \
     rsync \
     ca-certificates \
-    && rm -rf /var/cache/apk/* \
+    && yum clean all \
     && npm config set cache /tmp/.npm
 
 RUN echo "iptables -I OUTPUT -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu" >> /etc/rc.local
@@ -25,8 +26,8 @@ RUN npm install -g @anthropic-ai/claude-code
 WORKDIR /workspace
 
 # 创建非root用户
-RUN addgroup -g 1000 -S developer && \
-    adduser -u 1000 -S developer -G developer
+RUN groupadd -g 1000 developer && \
+    useradd -u 1000 -g developer -m -s /bin/bash developer
 
 # 设置环境变量
 ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
