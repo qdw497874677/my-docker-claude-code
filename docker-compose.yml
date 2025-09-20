@@ -7,12 +7,6 @@ services:
       - .:/workspace
       # 挂载用户Claude配置
       - ./.claude:/home/developer/.claude
-      # 挂载SSH密钥（可选）
-      - ./.ssh:/home/developer/.ssh:ro
-      # 挂载Git配置
-      - ./.gitconfig:/home/developer/.gitconfig:ro
-      # 挂载npm缓存
-      - npm_cache:/tmp/.npm
       # 挂载项目特定目录（根据需要）
       - ./projects:/workspace/projects
     environment:
