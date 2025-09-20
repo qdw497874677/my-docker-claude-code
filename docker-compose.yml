@@ -6,12 +6,10 @@ services:
       # 挂载当前项目目录到容器工作空间
       - .:/workspace
       # 挂载用户Claude配置
-      - ./.claude:/home/developer/.claude
+      - ./.claude:/root/.claude
       # 挂载项目特定目录（根据需要）
       - ./projects:/workspace/projects
     environment:
-      - HOME=/home/developer
-      - USER=developer
       - HTTP_PROXY=${HTTP_PROXY}
       - HTTPS_PROXY=${HTTPS_PROXY}
       - NO_PROXY=${NO_PROXY}

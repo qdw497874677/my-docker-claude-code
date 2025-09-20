@@ -29,27 +29,18 @@ RUN echo "iptables -I OUTPUT -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-ms
 # 安装Claude Code CLI
 RUN npm install -g @anthropic-ai/claude-code
 
+# 安装happy-coder
+RUN npm install -g happy-coder
+
 # 创建工作目录
 WORKDIR /workspace
 
-# 创建非root用户
-RUN groupadd -g 1000 developer && \
-    useradd -u 1000 -g developer -m -s /bin/bash developer
-
-# 切换到非root用户安装全局包
-USER developer
-RUN npm install -g @anthropic-ai/claude-code
-RUN npm install -g happy-coder
-
 # 设置环境变量
 ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-ENV HOME=/home/developer
+ENV HOME=/root
 
 # 复制Claude Code配置（如果有）
-COPY --chown=developer:developer CLAUDE.local.md /home/developer/.claude/CLAUDE.md
-
-# 切换到非root用户
-USER developer
+COPY CLAUDE.local.md /root/.claude/CLAUDE.md
 
 # 设置默认工作目录
 WORKDIR /workspace
