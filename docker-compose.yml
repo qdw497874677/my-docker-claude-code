@@ -1,20 +1,16 @@
-version: '3.8'
-
 services:
-  claude-code:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  my-docker-claude-code:
+    image: my-docker-claude-code:latest
     container_name: my-docker-claude-code
     volumes:
       # 挂载当前项目目录到容器工作空间
       - .:/workspace
       # 挂载用户Claude配置
-      - ~/.claude:/home/developer/.claude
+      - ./.claude:/home/developer/.claude
       # 挂载SSH密钥（可选）
-      - ~/.ssh:/home/developer/.ssh:ro
+      - ./.ssh:/home/developer/.ssh:ro
       # 挂载Git配置
-      - ~/.gitconfig:/home/developer/.gitconfig:ro
+      - ./.gitconfig:/home/developer/.gitconfig:ro
       # 挂载npm缓存
       - npm_cache:/tmp/.npm
       # 挂载项目特定目录（根据需要）

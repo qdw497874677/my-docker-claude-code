@@ -4,9 +4,33 @@
 
 ## 使用方法
 
+### 构建容器
+
+#### 通过Docker Compose构建（推荐）
+```bash
+docker-compose build
+```
+
+#### 通过Dockerfile直接构建
+```bash
+docker build -t my-docker-claude-code .
+```
+
 ### 启动容器
+
+#### 通过Docker Compose启动（推荐）
 ```bash
 docker-compose up -d
+```
+
+#### 通过Docker直接运行
+```bash
+docker run -it --name my-docker-claude-code \
+  -v $(pwd):/workspace \
+  -v ${HOME}/.claude:/home/developer/.claude \
+  -v ${HOME}/.ssh:/home/developer/.ssh:ro \
+  -v ${HOME}/.gitconfig:/home/developer/.gitconfig:ro \
+  my-docker-claude-code
 ```
 
 ### 进入容器
@@ -17,6 +41,11 @@ docker-compose exec claude-code bash
 ### 停止容器
 ```bash
 docker-compose down
+```
+
+### 重新构建并启动
+```bash
+docker-compose up -d --build
 ```
 
 ## 挂载的目录

@@ -16,6 +16,9 @@ RUN apk add --no-cache \
     && rm -rf /var/cache/apk/* \
     && npm config set cache /tmp/.npm
 
+# 安装Claude Code CLI
+RUN curl -fsSL https://claude.ai/install.sh | sh
+
 # 创建工作目录
 WORKDIR /workspace
 
