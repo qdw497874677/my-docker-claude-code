@@ -2,11 +2,14 @@ services:
   my-docker-claude-code:
     image: my-docker-claude-code:latest
     container_name: my-docker-claude-code
+    ports:
+      - "3456:3456"
     volumes:
       # 挂载当前项目目录到容器工作空间
       - .:/workspace
       # 挂载用户Claude配置
       - ./.claude:/root/.claude
+      - ./.claude-code-router:/root/.claude-code-router
       # 挂载项目特定目录（根据需要）
       - ./projects:/workspace/projects
     environment:
